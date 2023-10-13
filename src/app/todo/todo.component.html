@@ -1,0 +1,54 @@
+<div class="card-container">
+<mat-card fxLayout="column" fxLayoutGap="10px" class="todo-card2" style="padding: 8px; margin-top: 50px;">
+    <mat-card-title style="margin-left: 8px;">Todos</mat-card-title>
+    <mat-table [dataSource]="dataSource">
+      <!-- Define columns -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+        <mat-cell *matCellDef="let todo">{{ todo.id }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+        <mat-cell *matCellDef="let todo">{{ todo.description }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="summary">
+        <mat-header-cell *matHeaderCellDef>Summary</mat-header-cell>
+        <mat-cell *matCellDef="let todo">{{ todo.summary }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let todo">
+          <button mat-icon-button color="warn" (click)="deleteTodo(todo.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="['id', 'description', 'summary', 'action']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['id', 'description', 'summary', 'action'];"></mat-row>
+    </mat-table>
+  
+    <mat-paginator [pageSizeOptions]="[4, 8, 12]" showFirstLastButtons (page)="loadPage($event)"></mat-paginator>
+  </mat-card>
+  </div>
+
+  <div class="card-container">
+    <mat-card class="todo-card">
+      <mat-card-title>Add Todo</mat-card-title>  
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <input matInput [(ngModel)]="newTodo.description">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Summary</mat-label>
+        <input matInput [(ngModel)]="newTodo.summary">
+      </mat-form-field>
+    </mat-card>
+  </div>
+  
+
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <button mat-raised-button color="primary" (click)="loadPage()" style="margin-right: 8px;">Refresh</button>
+    <button mat-raised-button color="accent" (click)="addTodo()">Add</button>
+  </div>
+  
